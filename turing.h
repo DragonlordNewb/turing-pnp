@@ -9,6 +9,8 @@ namespace turing {
 		bool eraseSymbol;
 		bool writeSymbol;
 		int newSymbol;
+		bool emitSymbol;
+		int emission;
 		int newState;
 
 	};
@@ -57,6 +59,9 @@ namespace turing {
 				}
 				if (transitionInstruction.writeSymbol) {
 					tape[currentLocation] = transitionInstruction.newSymbol;
+				}
+				if (transitionInstruction.emitSymbol) {
+					emit(transitionInstruction.emission);
 				}
 				currentState = transitionInstruction.newState;
 			}
