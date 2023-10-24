@@ -1,3 +1,5 @@
+#pragma once
+
 namespace turing {
 
 	struct TransInstruct {
@@ -5,8 +7,9 @@ namespace turing {
 		bool moveLeft;
 		bool moveRight;
 		bool eraseSymbol;
-		bool writeNewSymbol;
+		bool writeSymbol;
 		int newSymbol;
+		int newState;
 
 	};
 
@@ -48,6 +51,14 @@ namespace turing {
 				}
 				if (transitionInstruction.moveRight) {
 					currentLocation += 1;
+				}
+				if (transitionInstruction.eraseSymbol) {
+					tape[currentLocation] = 0;
+				}
+				if (transitionInstruction.writeSymbol) {
+					tape[currentLocation] = transitionInstruction.newSymbol;
+				}
+				currentState = transitionInstruction.newState;
 			}
 	
 	};
