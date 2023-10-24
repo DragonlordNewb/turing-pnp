@@ -1,33 +1,55 @@
-using std::vector;
+namespace turing {
 
-class Tape {
+	struct TransInstruct {
 
-	private:
+		bool moveLeft;
+		bool moveRight;
+		bool eraseSymbol;
+		bool writeNewSymbol;
+		int newSymbol;
 
-		vector<int> tape;
+	};
 
-	public:
+	template <const const int tapeSize, const int emissionSize>
+	class TuringMachine {
 
-		int currentLength() {
-			return self.
-		}
+		private:
 
-		void ensure(int index) {
-			if 
-		}
+			int tape[tapeSize];
+			int currentState;
+			int currentLocation;
 
-};
+			virtual TransInstruct transition(int state, int symbol) = 0;
+	
+		public:
 
-class TuringMachine {
+			int emission[emissionSize];
+			int emissionCounter = 0;
+		
+			TuringMachine(int initialState, int initialTape[tapeSize]) {
+	
+				currentState = initialState;
 
-	public:
+				for (int i = 0; i < tapeSize; i++) {
+					tape[i] = initialTape[i];
+				}
+				
+			}
 
-		T currentState;
+			void emit(int value) {
+				emission[emissionCounter] = value;
+				emissionCounter += 1;
+			}
 
-		TuringMachine(T state) {
+			void update() {
+				TransInstruct transitionInstruction = transition(currentState, tape[currentLocation]);
+				if (transitionInstruction.moveLeft) {
+					currentLocation -= 1;
+				}
+				if (transitionInstruction.moveRight) {
+					currentLocation += 1;
+			}
+	
+	};
 
-			currentState = state;
-			
-		}
-
-};
+}
